@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using AlexaSkillsKit.Speechlet;
 using AlexaSkillsKit.Slu;
+using AlexaSkillsKit.Helpers;
 
 namespace AlexaSkillsKit.Json
 {
@@ -40,7 +41,8 @@ namespace AlexaSkillsKit.Json
             JObject requestJson = json.Value<JObject>("request");
             string requestType = requestJson.Value<string>("type");
             string requestId = requestJson.Value<string>("requestId");
-            DateTime timestamp = requestJson.Value<DateTime>("timestamp");
+            //DateTime timestamp = requestJson.Value<DateTime>("timestamp");
+            DateTime timestamp = DateTimeUtils.FromAmazonRequest(requestJson.Value<string>("timestamp"));
             switch (requestType) {
                 case "LaunchRequest":
                     request = new LaunchRequest(requestId, timestamp);
